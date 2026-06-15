@@ -5,6 +5,13 @@
 public class ExploradorCuidadoso extends Explorador implements Runnable {
     
     // * Construtor do explorador cuidadoso.
+    public ExploradorCuidadoso() {
+        this("Explorador Cuidadoso", "Explorar com atenção aos detalhes");
+    }
+
+    public ExploradorCuidadoso(String nome, String tarefa) {
+        super(nome, "Cuidadoso", Thread.MIN_PRIORITY, tarefa);
+    }
     
     /**
      * Implementação específica da execução de tarefa para exploradores cuidadosos.
@@ -13,7 +20,10 @@ public class ExploradorCuidadoso extends Explorador implements Runnable {
      */
     @Override
     public void executarTarefa() throws TarefaInvalidaException {
-        // Valida se a tarefa é válida
+        if (!tarefaValida()) {
+            throw new TarefaInvalidaException("Tarefa inválida para " + getNome());
+        }
+        System.out.println(getNome() + " está executando com cuidado: " + getTarefa());
     }
     
     /**
@@ -22,6 +32,12 @@ public class ExploradorCuidadoso extends Explorador implements Runnable {
      */
     @Override
     public void run() {
+        try {
+            exibirStatus();
+            executarTarefa();
+        } catch (TarefaInvalidaException e) {
+            System.out.println("Erro: " + e.getMessage());
+        }
     }
 }
 
