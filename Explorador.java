@@ -3,58 +3,60 @@
  * Define a estrutura básica para diferentes tipos de exploradores.
  */
 public abstract class Explorador {
-    private String nome; 
-    private String tipo; 
-    private int prioridade; 
-    private String tarefa;
-    
-    // * Construtor que inicializa todos os atributos do explorador.
-    public Explorador(String nome, String tipo, int prioridade, String tarefa) {
+    private String nome;
+    private String especialidade;
+    private int nivel;
+    private int energia;
+    private Missao tarefa;
+
+    // Construtor que inicializa todos os atributos do explorador.
+    public Explorador(String nome, String especialidade, int nivel, int energia, Missao tarefa) {
         this.nome = nome;
-        this.tipo = tipo;
-        this.prioridade = prioridade;
+        this.especialidade = especialidade;
+        this.nivel = nivel;
+        this.energia = energia;
         this.tarefa = tarefa;
     }
-    
 
     /**
      * Método abstrato que deve ser implementado pelas subclasses.
      * Define como cada tipo de explorador executa sua tarefa.
-     * @throws TarefaInvalidaException Se a tarefa for inválida
      */
-    public abstract void executarTarefa() throws TarefaInvalidaException;
-    
+    public abstract Double executarMissao();
+
     /**
      * Exibe o status completo do explorador com formatação clara.
      */
     public void exibirStatus() {
         System.out.println("Explorador: " + nome);
-        System.out.println("Tipo: " + tipo);
-        System.out.println("Prioridade: " + prioridade);
-        System.out.println("Tarefa: " + tarefa);
-        System.out.println("Status: Iniciando exploração...");
+        System.out.println("Especialidade: " + especialidade);
+        System.out.println("Nível: " + nivel);
+        System.out.println("Energia: " + energia);
+        System.out.println(
+            "Missão: " + tarefa.getDescricao() +
+            " (Local: " + tarefa.getLocal() + ", Dificuldade " + tarefa.getDificuldade() + ")"
+        );
     }
 
-    /**
-     * Valida se a tarefa foi informada corretamente.
-     */
-    protected boolean tarefaValida() {
-        return tarefa != null && !tarefa.trim().isEmpty();
-    }
-    
     // Getters para acesso aos atributos encapsulados
     public String getNome() {
         return nome;
     }
-    public String getTipo() {
-        return tipo;
-    }
-    public int getPrioridade() {
-        return prioridade;
-    }
-    public String getTarefa() {
-        return tarefa;
+
+    public String getEspecialidade() {
+        return especialidade;
     }
 
+    public int getNivel() {
+        return nivel;
+    }
+
+    public int getEnergia() {
+        return energia;
+    }
+
+    public Missao getTarefa() {
+        return tarefa;
+    }
 }
 
